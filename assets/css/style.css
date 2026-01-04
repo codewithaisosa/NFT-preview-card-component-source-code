@@ -206,37 +206,27 @@
     color: var(--accentClr);
     font-weight: 400;
   }
-  figure {
+    figure {
     position: relative;
+    cursor: pointer;
   }
-  .view-nft {
-    display: none;
-    height: 100%;
+
+  figure::after {
+    content: url(../img/icon-view.svg);
     position: absolute;
-    width: 100%;
-    z-index: 1;
-
-    div {
-      position: absolute;
-      inset: 0;
-      background-color: oklch(from var(--cardHover) l c h / 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2;
-      cursor: pointer;
-
-      svg {
-        height: 15%;
-        width: 15%;
-        z-index: 3;
-      }
-    }
+    inset: 0;
+    background-color: oklch(from var(--accentClr) l c h / 0.4);
+    opacity: 0;
+    transition: opacity 0.1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  #card-img:hover ~ div {
-    display: block;
+  figure:hover::after {
+    opacity: 1;
   }
+
   #footer-container {
     position: relative;
     display: flex;
@@ -282,3 +272,4 @@
     justify-content: space-between;
   }
 }
+
