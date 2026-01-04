@@ -1,0 +1,284 @@
+@layer reset, base, component, utilities;
+@layer reset {
+  /* 1. Use a more-intuitive box-sizing model */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* 2. Remove default margin */
+  *:not(dialog) {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* 3. Enable keyword animations */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      interpolate-size: allow-keywords;
+    }
+  }
+
+  body {
+    /* 4. Add accessible line-height */
+    line-height: 1.5;
+    /* 5. Improve text rendering */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* 6. Improve media defaults */
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* 7. Inherit fonts for form controls */
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  /* 8. Avoid text overflows */
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  /* 9. Improve line wrapping */
+  p {
+    text-wrap: pretty;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-wrap: balance;
+  }
+  a {
+    text-decoration: none;
+    color: var(--textAlt);
+    &:hover {
+      color: var(--accentClr);
+    }
+  }
+}
+@layer base {
+  /* outfit-300 - latin */
+  @font-face {
+    font-display: swap;
+    font-family: "Outfit";
+    font-style: normal;
+    font-weight: 300;
+    src: url("../fonts/outfit-v15-latin-300.woff2") format("woff2");
+  }
+
+  /* outfit-regular - latin */
+  @font-face {
+    font-display: swap;
+    font-family: "Outfit";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/outfit-v15-latin-regular.woff2") format("woff2");
+  }
+
+  /* outfit-600 - latin */
+  @font-face {
+    font-display: swap;
+    font-family: "Outfit";
+    font-style: normal;
+    font-weight: 600;
+    src: url("../fonts/outfit-v15-latin-600.woff2") format("woff2");
+  }
+
+  html {
+    font-size: 62.5%;
+  }
+
+  :root {
+    --maxWidth: 32rem;
+    --padding-1: 12px;
+    --padding-2: 18px;
+    --padding-3: 24px;
+    --padding-4: 30px;
+    --padding-5: 36px;
+    --padding-6: 42px;
+    --padding-7: 48px;
+
+    --blue-500: hsl(215, 51%, 70%);
+    --cyan-400: hsl(178, 100%, 50%);
+
+    --blue-950: hsl(217, 54%, 11%);
+    --blue-900: hsl(216, 50%, 16%);
+    --blue-800: hsl(215, 32%, 27%);
+    --white: hsl(0, 0%, 100%);
+
+    --textClr: var(--white);
+    --textAlt: hsl(0, 0%, 80%);
+    --accentClr: var(--cyan-400);
+    --cardHover: var(--accentClr);
+    --main-BG: var(--blue-950);
+    --card-BG: var(--blue-900);
+    --cardBorder: 16px;
+    --fontFamily: "Outfit";
+    --fontSize: 1.6rem;
+    --footerBg: var(--blue-900);
+  }
+
+  #page-container {
+    background-color: var(--main-BG);
+    display: grid;
+    font-family: var(--fontFamily);
+    font-size: var(--fontSize);
+    grid-template: "main" 1fr "footer" auto / 1fr;
+    min-height: 100dvh;
+    position: relative;
+    color: var(--textClr);
+  }
+  #main-container {
+    padding-block: var(--padding-7);
+    display: grid;
+    place-items: center;
+    position: relative;
+  }
+
+  .card {
+    display: grid;
+    gap: var(--padding-2);
+    color: var(--textAlt);
+    font-weight: 300;
+
+    .card__img {
+      display: grid;
+      overflow: hidden;
+      border-radius: calc(var(--cardBorder) / 2);
+    }
+    .card__title {
+      color: var(--textClr);
+      font-size: clamp(1.8rem, 1.12vw + 1.38rem, 2.5rem);
+      font-weight: 600;
+      cursor: pointer;
+      &:hover {
+        color: var(--cardHover);
+      }
+    }
+  }
+
+  .card__author {
+    border-top: 1px solid var(--blue-800);
+    display: flex;
+    align-items: center;
+    padding-top: var(--padding-2);
+
+    .card__author__img {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--white);
+      overflow: hidden;
+      border-radius: 100%;
+      margin-right: var(--padding-2);
+    }
+
+    .author-name {
+      color: var(--textClr);
+      margin-inline: 5px;
+      font-weight: 400;
+      cursor: pointer;
+      &:hover {
+        color: var(--cardHover);
+      }
+    }
+  }
+  .ethereum {
+    color: var(--accentClr);
+    font-weight: 400;
+  }
+  figure {
+    position: relative;
+  }
+  .view-nft {
+    display: none;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+
+    div {
+      position: absolute;
+      inset: 0;
+      background-color: oklch(from var(--cardHover) l c h / 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      cursor: pointer;
+
+      svg {
+        height: 15%;
+        width: 15%;
+        z-index: 3;
+      }
+    }
+  }
+
+  #card-img:hover ~ div {
+    display: block;
+  }
+  #footer-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: var(--padding-2);
+    padding-inline: var(--padding-4);
+    background-color: var(--footerBg);
+    border-top: 1px solid var(--blue-800);
+  }
+}
+@layer component {
+  .card {
+    width: min(100% - var(--padding-7), var(--maxWidth));
+    background-color: var(--card-BG);
+    padding: var(--padding-3);
+    border-radius: var(--cardBorder);
+  }
+  .icon {
+    height: 20px;
+    width: 20px;
+    display: inline;
+    margin-right: 6px;
+  }
+}
+@layer utilities {
+  .text-center {
+    text-align: center;
+  }
+  .wrap{
+    flex-wrap: wrap;
+  }
+  .hidden {
+    display: none;
+  }
+  .flex {
+    display: flex;
+  }
+  .align-center {
+    align-items: center;
+  }
+  .space-between {
+    justify-content: space-between;
+  }
+}
